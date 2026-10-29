@@ -23,6 +23,7 @@ class Settings(BaseSettings):
     ALLOWED_EXTENSIONS: set = {".pdf", ".csv", ".xlsx", ".png", ".jpg", ".jpeg"}
     
     # CORS - Read from env or use defaults
+    # Note: "*" should be used alone, not with specific origins
     _cors_env = os.getenv("CORS_ORIGINS", "")
     CORS_ORIGINS: list[str] = (
         _cors_env.split(",") if _cors_env else [
@@ -34,7 +35,6 @@ class Settings(BaseSettings):
             "https://fdr-frontend.onrender.com",
             "https://aicte-sih-fdr-1.onrender.com",
             "https://aicte-fdr.onrender.com",
-            "*",
         ]
     )
     
