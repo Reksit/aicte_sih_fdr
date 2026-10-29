@@ -22,15 +22,21 @@ class Settings(BaseSettings):
     MAX_UPLOAD_SIZE_MB: int = 15
     ALLOWED_EXTENSIONS: set = {".pdf", ".csv", ".xlsx", ".png", ".jpg", ".jpeg"}
     
-    # CORS
-    CORS_ORIGINS: list[str] = [
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-        "http://localhost:3000",
-        "http://localhost:8000",
-        "http://127.0.0.1:8000",
-        "*",
-    ]
+    # CORS - Read from env or use defaults
+    _cors_env = os.getenv("CORS_ORIGINS", "")
+    CORS_ORIGINS: list[str] = (
+        _cors_env.split(",") if _cors_env else [
+            "http://localhost:5173",
+            "http://127.0.0.1:5173",
+            "http://localhost:3000",
+            "http://localhost:8000",
+            "http://127.0.0.1:8000",
+            "https://fdr-frontend.onrender.com",
+            "https://aicte-sih-fdr-1.onrender.com",
+            "https://aicte-fdr.onrender.com",
+            "*",
+        ]
+    )
     
     # AICTE Rule Defaults (APH 2024-27 + 2026-27 Addendum)
     DEFAULT_BASE_DEPOSIT: float = 3500000.0  # ₹35 Lakh standard base
